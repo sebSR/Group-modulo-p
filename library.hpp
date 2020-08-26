@@ -4,7 +4,8 @@
 
 using namespace std;
 
-const int p = 13;//deklaracja p, mo¿liwoœæ zmiany dla cia³a inne liczby pierwszej
+// declaration for modulo class
+const int modulo_integer = 11;
 
 class modulo{
   private:
@@ -12,7 +13,8 @@ class modulo{
   public:
     modulo();
     modulo(int n);
-    int euklides(int a, int b);//wyznacza element odwrotny
+    int euklides(int a, int b);
+    int invers();
 
     friend ostream & operator<<(ostream & out, modulo & k);
     friend istream & operator>>(istream & in, modulo & k);
@@ -21,10 +23,6 @@ class modulo{
     modulo operator-();
     modulo operator*(const modulo& k);
     modulo operator/(const modulo& k);
-    modulo & operator+=(const modulo& k);
-    modulo & operator-=(const modulo& k);
-    modulo & operator*=(const modulo& k);
-    modulo & operator/=(const modulo& k);
     modulo & operator=(const modulo& k);
     bool operator>(const modulo& k);
     bool operator<(const modulo& k);
@@ -34,14 +32,10 @@ class modulo{
     bool operator!=(const modulo& k);
 };
 
-class exceptions{//klasa wyrzuca wyj¹tki dla Ÿle wpr wartoœci i dzielenia przez 0
+class exceptions{
   private:
   public:
     static const string error[2];
 };
 
 #endif
-
-
-
-

@@ -5,36 +5,30 @@
 using namespace std;
 
 int main(){
-    modulo k,l,m;   // objects of class Modulo
-    cout << "Class, ModuloP for P = 15 -> {0,1,...,14}"  << endl << endl;
-    cout << "Give a value for first object of class ModuloP k = ";  // loading variables
-    cin >> k;
-    cout << "Give a value for second object of class ModuloP l = ";
-    cin >> l;
+    modulo firstObject, secondObject, tmpObject;
+    cout << "Class ModuloP for P = 11 -> {0,1,...,10}"  << endl << endl;
+    cout << "Give a value for firstObject of class ModuloP: ";
+    cin >> firstObject;
+    cout << "Give a value for secondObject of class ModuloP: ";
+    cin >> secondObject;
     cout << endl;
+    cout << "Inverse element to the "<< firstObject <<": " << firstObject.invers();
+    cout << endl << endl;
+    cout << "Inverse element to the "<< secondObject <<": " << secondObject.invers();
+    cout << endl << endl;
 
-    if ( k == l) cout << "k = l " << endl;
-        else if ( k != l) cout << "k != l " << endl;
-    if (k < l) cout << "k < l " << endl;
-        else if (k > l) cout << "k > l " << endl;
-    cout << endl;
+    cout << "Basic operators in class ModuloP:" << endl;
+    tmpObject = firstObject + secondObject;
+    cout << firstObject << " + " << secondObject << " = " << tmpObject << endl;
 
-    m = k + l;
-    cout << "k+l = " << m << endl;
-    m = k - l;
-    cout << "k-l = " << m << endl;
-    m = k * l;
-    cout << "k*l = " << m << endl;
-    m = k/l;
-    cout << "k/l = " << m << endl;
-    m = k += l;
-    cout << "k+=l = " << m << endl;
-    m = k-=l;
-    cout << "k-=l = " << m << endl;
-    m = k *= l ;
-    cout << "k*=l = " << m << endl;
-    m = k /= l;
-    cout << "k/l = " << m << endl;
+    tmpObject = firstObject - secondObject;
+    cout << firstObject << " - " << secondObject << " = " << tmpObject << endl;
+
+    tmpObject = firstObject * secondObject;
+    cout << firstObject << " * " <<  secondObject << " = " << tmpObject << endl;
+
+    tmpObject = firstObject / secondObject;
+    cout << firstObject << " / " << secondObject << " = " << tmpObject << endl;
 
     return 0;
 }
