@@ -23,7 +23,6 @@ an argument of type int. Class has implemented following operators:
 Finding the inverse element is useful in RSA protocol. General scheme of RSA:
 * fix two diffrent number ***p,q*** -> ***n = p * q***
 * ***m = phi(n) = (p-1)(q-1)*** where ***phi*** is the Euler totient function <br/>
-https://github.com/sebSR/Euler-function
 * find the number ***d*** such that ***gcd(d,m) = 1***
 * find the number ***e*** such that ***d * e = 1 mod m*** <br/>
 -> ***e*** is an invert element to ***d*** and main.cpp finds it
