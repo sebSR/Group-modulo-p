@@ -19,6 +19,10 @@ an argument of type int. Class has implemented following operators:
 * comparison: < *and* <= *and* > *and*d => *and* != *and* ==
 * stream: << *and* >>
 
+# RUN
+1. cmake -> Makefile
+2. make -> executable file
+
 # Motivation
 Finding the inverse element is useful in RSA protocol. General scheme of RSA:
 * fix two diffrent number ***p,q*** -> ***n = p * q***
