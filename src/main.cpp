@@ -5,16 +5,16 @@
 using namespace std;
 
 int main(){
-    modulo firstObject, secondObject, tmpObject;
+    Modulo firstObject, secondObject, tmpObject;
     cout << "Class ModuloP for P = 11 -> {0,1,...,10}"  << endl << endl;
     cout << "Give a value for firstObject of class ModuloP: ";
     cin >> firstObject;
     cout << "Give a value for secondObject of class ModuloP: ";
     cin >> secondObject;
     cout << endl;
-    cout << "Inverse element to the "<< firstObject <<": " << firstObject.invers();
+    cout << "Inverse element to the "<< firstObject <<": " << firstObject.inverseElement();
     cout << endl << endl;
-    cout << "Inverse element to the "<< secondObject <<": " << secondObject.invers();
+    cout << "Inverse element to the "<< secondObject <<": " << secondObject.inverseElement();
     cout << endl << endl;
 
     cout << "Basic operators in class ModuloP:" << endl;

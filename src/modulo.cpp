@@ -1,59 +1,52 @@
 #include <iostream>
 #include <math.h>
+#include <stdlib.h>
 #include "library.hpp"
 
-//variables for extended Euclidean algorithm
-int u,w,x,z,q;
 using namespace std;
 
 
-modulo:: modulo(){
-    rest = 0;
+Modulo::Modulo(){
+    set_rest(0);
 }
 
 
-modulo:: modulo(int n){
-  while(n >= modulo_integer){
-    n = n%modulo_integer;
+Modulo::Modulo(int n){
+  set_rest(n);
+}
+
+
+void Modulo::set_rest(int n){
+  if(n >= moduloInteger){
+    n = n%moduloInteger;
   }
-  cout << rest;
+  while(n < 0){
+    n += moduloInteger;
+  }
   rest = n;
 }
 
 
-modulo modulo::operator+(const modulo& k){
-    modulo result;
-    if(rest+k.rest < modulo_integer){
-      result.rest = rest + k.rest;
-    }
-    else{
-      result.rest = rest + k.rest - modulo_integer;
-    }
+Modulo Modulo::operator+(const Modulo &k){
+    Modulo result(rest + k.rest);
     return result;
 }
 
 
-modulo modulo::operator-(const modulo& k){
-    modulo result;
-    if(rest-k.rest >= 0){
-      result.rest = rest-k.rest;
-    }
-    else{
-      result.rest = rest - k.rest + modulo_integer;
-    }
+Modulo Modulo::operator-(const Modulo &k){
+    Modulo result(rest - k.rest);
     return result;
 }
 
 
-modulo modulo::operator*(const modulo& k){
-    modulo result;
-    result.rest = (rest * k.rest)%modulo_integer;
+Modulo Modulo::operator*(const Modulo &k){
+    Modulo result(rest * k.rest);
     return result;
 }
 
 
-// return inverse element to a in Z(b)
-int modulo:: euklides(int a, int b){
+int Modulo::extendedEuclidean(int a, int b){
+ int u,w,x,z,q;
  u = 1; w = a;
  x = 0; z = b;
   while(w){
@@ -65,61 +58,52 @@ int modulo:: euklides(int a, int b){
     u -= q * x;
     w -= q * z;
   }
-  if(z == 1){
-    if(x < 0) x += b;
+  if(z == 1 && x < 0){
+    x += b;
   }
   return x;
 }
 
 
-int modulo:: invers(){
- u = 1; w = rest;
- x = 0; z = modulo_integer;
-  while(w){
-    if(w < z){
-      q = u; u = x; x = q;
-      q = w; w = z; z = q;
-    }
-    q = w / z;
-    u -= q * x;
-    w -= q * z;
-  }
-  if(z == 1){
-    if(x < 0){
-      x += modulo_integer;
-    }
-  }
-  return x;
+int Modulo::inverseElement(){
+  return extendedEuclidean(rest, moduloInteger);
 }
 
 
-modulo modulo::operator/(const modulo& k){
-    modulo result;
-    try {
+Modulo Modulo::operator/(const Modulo &k){
+    try{
         if(k.rest != 0){
-            euklides(k.rest, modulo_integer);
-            result.rest = (rest*x)%modulo_integer;
-            return result;}
-        else throw 1;}
-    catch (int i){cout << exceptions::error[i] << endl; return 1;}
+            int inverseElement;
+            inverseElement = extendedEuclidean(k.rest, moduloInteger);
+	          Modulo result(rest*inverseElement);
+            return result;
+	}
+        else throw 1;
+    }
+    catch (int i){
+        cout << exceptions::error[i] << endl;
+        return 1;
+    }
 }
 
 
-modulo &modulo::operator=(const modulo& k){
-    rest = k.rest;
+Modulo &Modulo::operator=(const Modulo &k){
+    set_rest(k.rest);
     return *this;
 }
 
 
-bool modulo::operator>(const modulo& k){
+bool Modulo::operator>(const Modulo& k){
     if(rest > k.rest){
       return 1;
     }
-    else return 0;
+    else{
+      return 0;
+    }
 }
 
 
-bool modulo::operator<(const modulo& k){
+bool Modulo::operator<(const Modulo& k){
     if(rest < k.rest){
      return 1;
     }
@@ -129,7 +113,7 @@ bool modulo::operator<(const modulo& k){
 }
 
 
-bool modulo::operator>=(const modulo& k){
+bool Modulo::operator>=(const Modulo& k){
     if(rest >= k.rest){
       return 1;
     }
@@ -139,7 +123,7 @@ bool modulo::operator>=(const modulo& k){
 }
 
 
-bool modulo::operator<=(const modulo& k){
+bool Modulo::operator<=(const Modulo& k){
     if(rest <= k.rest){
       return 1;
     }
@@ -149,13 +133,17 @@ bool modulo::operator<=(const modulo& k){
 }
 
 
-bool modulo::operator==(const modulo& k){
-    if( rest == k.rest ) return 1;
-    else return 0;
+bool Modulo::operator==(const Modulo& k){
+    if(rest == k.rest){
+      return 1;
+    }
+    else{
+      return 0;
+    }
 }
 
 
-bool modulo::operator!=(const modulo& k){
+bool Modulo::operator!=(const Modulo& k){
     if(rest != k.rest){
       return 1;
     }
@@ -165,26 +153,24 @@ bool modulo::operator!=(const modulo& k){
 }
 
 
-ostream &operator<<(ostream &out, modulo &k){
+ostream &operator<<(ostream &out, Modulo &k){
     out << k.rest;
     return out;
 }
 
-istream &operator>>(istream &in, modulo &k){
-    in >> k.rest;
-    while(k.rest >= modulo_integer){
-      k.rest = k.rest%modulo_integer;
-    }
+
+istream &operator>>(istream &in, Modulo &k){
+    int tmpInt;
     try{
-      if (k.rest < modulo_integer && k.rest >= 0){
-         return in;
-      }
-      else{
+      in >> tmpInt;
+      if (!in){
         throw 0;
       }
+      k.set_rest(tmpInt);
     }
-    catch (int i){
+    catch(int i){
       cout << exceptions::error[i] << endl;
-      return in;
+      exit(EXIT_FAILURE);
     }
+
 }

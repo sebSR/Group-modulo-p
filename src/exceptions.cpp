@@ -3,4 +3,4 @@
 
 using namespace std;
 
-const string exceptions::error[] = {"Value is not from the range. Results can be wrong.", "Divided by '0' !"};
+const string exceptions::error[] = {"It's not int type.", "Divided by '0' !"};

@@ -4,32 +4,35 @@
 
 using namespace std;
 
-// declaration for modulo class
-const int modulo_integer = 11;
+const int moduloInteger = 11;
 
-class modulo{
+
+class Modulo{
   private:
     int rest;
   public:
-    modulo();
-    modulo(int n);
-    int euklides(int a, int b);
-    int invers();
+    Modulo();
+    Modulo(int n);
 
-    friend ostream & operator<<(ostream & out, modulo & k);
-    friend istream & operator>>(istream & in, modulo & k);
-    modulo operator+(const modulo& k);
-    modulo operator-(const modulo& k);
-    modulo operator-();
-    modulo operator*(const modulo& k);
-    modulo operator/(const modulo& k);
-    modulo & operator=(const modulo& k);
-    bool operator>(const modulo& k);
-    bool operator<(const modulo& k);
-    bool operator>=(const modulo& k);
-    bool operator<=(const modulo& k);
-    bool operator==(const modulo& k);
-    bool operator!=(const modulo& k);
+    void set_rest(int n);
+
+    int extendedEuclidean(int a, int b);
+    int inverseElement();
+
+    friend ostream & operator<<(ostream &out, Modulo &k);
+    friend istream & operator>>(istream &in, Modulo &k);
+    Modulo operator+(const Modulo &k);
+    Modulo operator-(const Modulo &k);
+    Modulo operator-();
+    Modulo operator*(const Modulo &k);
+    Modulo operator/(const Modulo &k);
+    Modulo & operator=(const Modulo &k);
+    bool operator>(const Modulo &k);
+    bool operator<(const Modulo &k);
+    bool operator>=(const Modulo &k);
+    bool operator<=(const Modulo &k);
+    bool operator==(const Modulo &k);
+    bool operator!=(const Modulo &k);
 };
 
 class exceptions{

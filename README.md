@@ -13,8 +13,7 @@ and the last operator is defined: ***a/b = a * c***, where ***c*** is an inverse
 In our case ***9 * 5 = 45 = 1 mod 11* so *5/9 = 5 * 5 = 25 = 3mod(11)***
 
 # Class Description
-Class has two constructors - the default (initializing value object 0) and the constructor with
-an argument of type int. Class has implemented following operators:
+Class has implemented following operators:
 * binary: + *and* - *and* * *and* unary: -
 * comparison: < *and* <= *and* > *and*d => *and* != *and* ==
 * stream: << *and* >>
@@ -33,5 +32,5 @@ Finding the inverse element is useful in RSA protocol. General scheme of RSA:
 * next ***p,q,m*** should be forget and the PRIVATE KEY: ***(d,n)*** and PUBLIC KEY: ***(e,n)***
 * encoding and decoding function:
 <p align="center">
-  <img src = "rsa.png" width="200">
+  <img src = "./scheme/rsa.png" width="200">
 </p>
