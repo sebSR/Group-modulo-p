@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include "library.hpp"
 
-using namespace std;
+
+const std::string Modulo::error[] = {"It's not int type.", "Divided by '0' !"};
 
 
 Modulo::Modulo(){
@@ -16,36 +17,21 @@ Modulo::Modulo(int n){
 }
 
 
-void Modulo::set_rest(int n){
+Modulo::~Modulo() = default;
+
+
+void Modulo::set_rest(int n) noexcept{
   if(n >= moduloInteger){
     n = n%moduloInteger;
   }
   while(n < 0){
     n += moduloInteger;
   }
-  rest = n;
+  this -> rest = n;
 }
 
 
-Modulo Modulo::operator+(const Modulo &k){
-    Modulo result(rest + k.rest);
-    return result;
-}
-
-
-Modulo Modulo::operator-(const Modulo &k){
-    Modulo result(rest - k.rest);
-    return result;
-}
-
-
-Modulo Modulo::operator*(const Modulo &k){
-    Modulo result(rest * k.rest);
-    return result;
-}
-
-
-int Modulo::extendedEuclidean(int a, int b){
+int Modulo::extendedEuclidean(int a, int b) noexcept{
  int u,w,x,z,q;
  u = 1; w = a;
  x = 0; z = b;
@@ -65,35 +51,78 @@ int Modulo::extendedEuclidean(int a, int b){
 }
 
 
-int Modulo::inverseElement(){
+int Modulo::inverseElement() noexcept{
   return extendedEuclidean(rest, moduloInteger);
 }
 
 
-Modulo Modulo::operator/(const Modulo &k){
-    try{
-        if(k.rest != 0){
-            int inverseElement;
-            inverseElement = extendedEuclidean(k.rest, moduloInteger);
-	          Modulo result(rest*inverseElement);
-            return result;
-	}
-        else throw 1;
-    }
-    catch (int i){
-        cout << exceptions::error[i] << endl;
-        return 1;
-    }
+std::ostream &operator<<(std::ostream &out, Modulo k) noexcept{
+   out << k.rest;
+   return out;
 }
 
 
-Modulo &Modulo::operator=(const Modulo &k){
+std::istream &operator>>(std::istream &in, Modulo &k) noexcept{
+    int tmpInt;
+    in >> tmpInt;
+    if (!in){
+	std::cout << Modulo::error[0] << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    k.set_rest(tmpInt);
+}
+
+
+Modulo Modulo::operator++() noexcept{
+    set_rest(rest + 1);
+    return *this;
+}
+
+
+Modulo Modulo::operator--() noexcept{
+    set_rest(rest - 1);
+    return *this;
+}
+
+
+Modulo Modulo::operator+(const Modulo &k) noexcept{
+    Modulo result(rest + k.rest);
+    return result;
+}
+
+
+Modulo Modulo::operator-(const Modulo &k) noexcept{
+    Modulo result(rest - k.rest);
+    return result;
+}
+
+
+Modulo Modulo::operator*(const Modulo &k) noexcept{
+    Modulo result(rest * k.rest);
+    return result;
+}
+
+
+Modulo Modulo::operator/(const Modulo &k) noexcept(false){
+    if (k.rest != 0){
+        int inverseElement;
+        inverseElement = extendedEuclidean(k.rest, moduloInteger);
+        Modulo result(rest*inverseElement);
+        return result;
+     }
+     else{
+	throw 1;
+     }
+}
+
+
+Modulo &Modulo::operator=(const Modulo &k) noexcept{
     set_rest(k.rest);
     return *this;
 }
 
 
-bool Modulo::operator>(const Modulo& k){
+bool Modulo::operator>(const Modulo& k) noexcept{
     if(rest > k.rest){
       return 1;
     }
@@ -103,7 +132,7 @@ bool Modulo::operator>(const Modulo& k){
 }
 
 
-bool Modulo::operator<(const Modulo& k){
+bool Modulo::operator<(const Modulo& k) noexcept{
     if(rest < k.rest){
      return 1;
     }
@@ -113,7 +142,7 @@ bool Modulo::operator<(const Modulo& k){
 }
 
 
-bool Modulo::operator>=(const Modulo& k){
+bool Modulo::operator>=(const Modulo& k) noexcept{
     if(rest >= k.rest){
       return 1;
     }
@@ -123,7 +152,7 @@ bool Modulo::operator>=(const Modulo& k){
 }
 
 
-bool Modulo::operator<=(const Modulo& k){
+bool Modulo::operator<=(const Modulo& k) noexcept{
     if(rest <= k.rest){
       return 1;
     }
@@ -133,7 +162,7 @@ bool Modulo::operator<=(const Modulo& k){
 }
 
 
-bool Modulo::operator==(const Modulo& k){
+bool Modulo::operator==(const Modulo& k) noexcept{
     if(rest == k.rest){
       return 1;
     }
@@ -143,34 +172,11 @@ bool Modulo::operator==(const Modulo& k){
 }
 
 
-bool Modulo::operator!=(const Modulo& k){
+bool Modulo::operator!=(const Modulo& k) noexcept{
     if(rest != k.rest){
       return 1;
     }
     else{
       return 0;
     }
-}
-
-
-ostream &operator<<(ostream &out, Modulo &k){
-    out << k.rest;
-    return out;
-}
-
-
-istream &operator>>(istream &in, Modulo &k){
-    int tmpInt;
-    try{
-      in >> tmpInt;
-      if (!in){
-        throw 0;
-      }
-      k.set_rest(tmpInt);
-    }
-    catch(int i){
-      cout << exceptions::error[i] << endl;
-      exit(EXIT_FAILURE);
-    }
-
 }
